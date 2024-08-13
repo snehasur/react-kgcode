@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Hello from "./Hello";
 import Random from "./Random";
 import AppTodo from "./components/AddTodo";
 import AppName from "./components/AppName";
 import TodoItem1 from "./components/TodoItem1";
 import TodoItem2 from "./components/TodoItem2";
-import 'bootstrap/dist/css/bootstrap.min.css' 
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
 import ClockHeading from "./components/ClockHeading";
@@ -14,11 +14,14 @@ import CurrentTime from "./components/CurrentTime";
 import FoodItems from "./components/FoodItems";
 import ErrorMessage from "./components/ErrorMessage";
 import TodoItem from "./components/TodoItem";
-import TodoItems from "./components/TodoItems";   
+import TodoItems from "./components/TodoItems";
 import style from "./components/App.module.css";
 import Display from "./components/Display";
 import ButtonsContainer from "./components/ButtonsContainer";
-function App(){
+import Container from "./components/Container";
+import FoodInput from "./components/FoodInput";
+
+function App() {
   // return <div>
   //   <h1>this is the best react course</h1>
   //   <Hello></Hello>
@@ -44,7 +47,7 @@ function App(){
   // </center>
 
   //fragment
-  // return 
+  // return
   // <React.Fragment>
   //   <h1>Healthy Food</h1>
   //   <ul className="list-group">
@@ -55,45 +58,45 @@ function App(){
   //     <li className="list-group-item">Milk</li>
   //   </ul>
   // </React.Fragment>
-//   let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
-//   // if (foodItems.length===0){
-//   //   return <h1>No food items</h1>
-//   // }
-//   let emptyMessage=(foodItems.length===0 && <h1>No food items</h1>);
-//   return (<>
-//     <h1>Healthy Food</h1>
-//     {/* {foodItems.length===0 && <h1>No food items</h1>} */}
-//     {/* {emptyMessage} */}
-// {foodItems.length===0 && <h3>No food items</h3>}
-//     <ul className="list-group">
-//       {foodItems.map((foodItem)=>(<li className="list-group-item" key={foodItem}>{foodItem}</li>))}
-//     </ul>
-//   </>
-//   );
+  //   let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
+  //   // if (foodItems.length===0){
+  //   //   return <h1>No food items</h1>
+  //   // }
+  //   let emptyMessage=(foodItems.length===0 && <h1>No food items</h1>);
+  //   return (<>
+  //     <h1>Healthy Food</h1>
+  //     {/* {foodItems.length===0 && <h1>No food items</h1>} */}
+  //     {/* {emptyMessage} */}
+  // {foodItems.length===0 && <h3>No food items</h3>}
+  //     <ul className="list-group">
+  //       {foodItems.map((foodItem)=>(<li className="list-group-item" key={foodItem}>{foodItem}</li>))}
+  //     </ul>
+  //   </>
+  //   );
 
-//props
-// let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
-// return (
-//   <>
-//     <h1 className="food-heading">Healthy Food</h1>
-//     <ErrorMessage items={foodItems}/>
-//     <FoodItems items={foodItems}/>
-//   </>
-  
-// )
-//todo with props
-//  const todoItems=[{
-//   name:"Buy Milk",
-//   date:"4/10/2023"
-//   },
-//   {
-//     name:"Buy Bread",
-//     date:"4/10/2023"
-//   },
-//   {
-//     name:"Buy Rice",
-//     date:"4/10/2023"
-//   }];
+  //props
+  // let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
+  // return (
+  //   <>
+  //     <h1 className="food-heading">Healthy Food</h1>
+  //     <ErrorMessage items={foodItems}/>
+  //     <FoodItems items={foodItems}/>
+  //   </>
+
+  // )
+  //todo with props
+  //  const todoItems=[{
+  //   name:"Buy Milk",
+  //   date:"4/10/2023"
+  //   },
+  //   {
+  //     name:"Buy Bread",
+  //     date:"4/10/2023"
+  //   },
+  //   {
+  //     name:"Buy Rice",
+  //     date:"4/10/2023"
+  //   }];
 
   // return <>
   // {/* <TodoItem todoName="Buy Milk" todoDate="4/10/2023"/>
@@ -104,23 +107,157 @@ function App(){
   // </>
   //calculator
   // return <>
-  // <div className={style.calculator}> 
+  // <div className={style.calculator}>
   //   <Display/>
   //   <ButtonsContainer/>
   // </div>
 
   // </>
-let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
-return (
-  <>
-    <h1 className="food-heading">Healthy Food</h1>
-    <ErrorMessage items={foodItems}/>
-    <FoodItems items={foodItems}/>
-  </>
-  
-)
+  //passing function via props
+  // let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
+  // let textState=useState();
+  // let textToShow="Food Item Entered By User";
 
+  // const handleOnChange=(event)=>{
+  //   console.log(event.target.value+'from app')
+  //   textToShow=event.target.value;
+  // }
+  // return (
+  //   <>
+  //   <Container>
+  //     <h1 className="food-heading">Healthy Food</h1>
+  //     <ErrorMessage items={foodItems}/>
+  //     <FoodInput handleOnChange={handleOnChange}/>
+  //     <p>
+  //       {textToShow}
+  //     </p>
+  //     <FoodItems items={foodItems}/>
+  //   </Container>
+  //   <Container>
+  //     <p>
+  //       Above is the list of healthy food items.
+  //     </p>
 
+  //   </Container>
+  //   </>
+
+  // )
+
+  // }
+  //userState
+  // let foodItems=['Dal','Green Vegetable','Roti','Salad','Milk'];
+  // let textStateArr=useState('Food Item Entered By User');
+  // let textToShow=textStateArr[0];
+  // let setTextState=textStateArr[1];
+  // console.log(`Current value of state is:${textStateArr}`);
+  // const handleOnChange=(event)=>{
+  //   console.log(event.target.value+'from app')
+  //   setTextState(event.target.value);
+  // }
+  // return (
+  //   <>
+  //   <Container>
+  //     <h1 className="food-heading">Healthy Food</h1>
+  //     <ErrorMessage items={foodItems}/>
+  //     <FoodInput handleOnChange={handleOnChange}/>
+  //     <p>
+  //       {textToShow}
+  //     </p>
+  //     <FoodItems items={foodItems}/>
+  //   </Container>
+  //   <Container>
+  //     <p>
+  //       Above is the list of healthy food items.
+  //     </p>
+
+  //   </Container>
+  //   </>
+
+  // )
+
+  // }
+  // let [foodItems,setFoodItems]=useState([]);
+  // const onKeyDown=(event)=>{
+  //   if(event.key==='Enter'){
+  //     let newFoodItem=event.target.value;
+  //     event.target.value="";
+  //     console.log('Food item entered is:'+newFoodItem);
+  //     let newItems = [...foodItems,newFoodItem];
+  //     setFoodItems(newItems);
+  //   }
+  // }
+  // return (
+  //   <>
+  //   <Container>
+  //     <h1 className="food-heading">Healthy Food</h1>
+  //     <FoodInput handleKeyDown={onKeyDown}/>
+  //     <ErrorMessage items={foodItems}/>
+  //     <FoodItems items={foodItems}/>
+  //   </Container>
+  //   <Container>
+  //     <p>
+  //       Above is the list of healthy food items.
+  //     </p>
+
+  //   </Container>
+  //   </>
+
+  // )
+
+  //calculator
+  // const [calVal, setCalVal] = useState("");
+  // const onButtonClick = (buttonName) => {
+  //   console.log(buttonName);
+  //   if (buttonName === "C") {
+  //     setCalVal("");
+  //   } else if (buttonName === "=") {
+  //     try {
+  //       setCalVal(eval(calVal).toString());
+  //     } catch {
+  //       setCalVal("Error");
+  //     }
+  //   } else {
+  //     setCalVal(calVal + buttonName);
+  //   }
+  // };
+  // return (
+  //   <>
+  //     <div className={style.calculator}>
+  //       <Display displayValue={calVal} />
+  //       <ButtonsContainer onButtonClick={onButtonClick} />
+  //     </div>
+  //   </>
+  // );
+
+  //todo
+  const initialTodoItems = [
+    {
+      name: "Buy Milk",
+      date: "4/10/2023",
+    },
+    {
+      name: "Buy Bread",
+      date: "4/10/2023",
+    },
+    {
+      name: "Buy Rice",
+      date: "4/10/2023",
+    },
+  ];
+  const [todoItems, setTodoItems] = useState(initialTodoItems);
+  const handleNewItem = (itemName, itemDueDate) => {
+    console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+  };
+
+  return (
+    <>
+      <center className="todo-container">
+        <AppName />
+        <AppTodo onNewItem={handleNewItem} />
+        <TodoItems todoItems={todoItems} />
+      </center>
+    </>
+  );
 }
 
 export default App;
