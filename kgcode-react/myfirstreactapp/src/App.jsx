@@ -20,6 +20,7 @@ import Display from "./components/Display";
 import ButtonsContainer from "./components/ButtonsContainer";
 import Container from "./components/Container";
 import FoodInput from "./components/FoodInput";
+import WelcomeMessage from "./components/WelcomeMessage";
 
 function App() {
   // return <div>
@@ -230,23 +231,32 @@ function App() {
   // );
 
   //todo
-  const initialTodoItems = [
-    {
-      name: "Buy Milk",
-      date: "4/10/2023",
-    },
-    {
-      name: "Buy Bread",
-      date: "4/10/2023",
-    },
-    {
-      name: "Buy Rice",
-      date: "4/10/2023",
-    },
-  ];
-  const [todoItems, setTodoItems] = useState(initialTodoItems);
+  // const initialTodoItems = [
+  //   {
+  //     name: "Buy Milk",
+  //     date: "4/10/2023",
+  //   },
+  //   {
+  //     name: "Buy Bread",
+  //     date: "4/10/2023",
+  //   },
+  //   {
+  //     name: "Buy Rice",
+  //     date: "4/10/2023",
+  //   },
+  // ];
+  const [todoItems, setTodoItems] = useState([]);
   const handleNewItem = (itemName, itemDueDate) => {
     console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+    const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+    setTodoItems(newTodoItems);
+  };
+  const handelDeleteItem = (todoItemsName) => {
+    //console.log(`Item Deleted:${todoItemsName}`);
+    const newTodoItems = todoItems.filter(
+      (item) => item.name !== todoItemsName
+    );
+    setTodoItems(newTodoItems);
   };
 
   return (
@@ -254,7 +264,8 @@ function App() {
       <center className="todo-container">
         <AppName />
         <AppTodo onNewItem={handleNewItem} />
-        <TodoItems todoItems={todoItems} />
+        {todoItems.length === 0 && <WelcomeMessage />}
+        <TodoItems todoItems={todoItems} onDeleteClick={handelDeleteItem} />
       </center>
     </>
   );
