@@ -22,6 +22,8 @@ import Container from "./components/Container";
 import FoodInput from "./components/FoodInput";
 import WelcomeMessage from "./components/WelcomeMessage";
 
+import AddTodoForm from "./components/AddTodoForm";
+
 function App() {
   // return <div>
   //   <h1>this is the best react course</h1>
@@ -245,6 +247,45 @@ function App() {
   //     date: "4/10/2023",
   //   },
   // ];
+  // const [todoItems, setTodoItems] = useState([]);
+  // const handleNewItem = (itemName, itemDueDate) => {
+  //   console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+  //   const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+  //   setTodoItems(newTodoItems);
+  // };
+  // const handelDeleteItem = (todoItemsName) => {
+  //   //console.log(`Item Deleted:${todoItemsName}`);
+  //   const newTodoItems = todoItems.filter(
+  //     (item) => item.name !== todoItemsName
+  //   );
+  //   setTodoItems(newTodoItems);
+  // };
+
+  // return (
+  //   <>
+  //     <center className="todo-container">
+  //       <AppName />
+  //       <AppTodo onNewItem={handleNewItem} />
+  //       {todoItems.length === 0 && <WelcomeMessage />}
+  //       <TodoItems todoItems={todoItems} onDeleteClick={handelDeleteItem} />
+  //     </center>
+  //   </>
+  // );
+  //todo form+useref
+  const initialTodoItems = [
+    {
+      name: "Buy Milk",
+      date: "4/10/2023",
+    },
+    {
+      name: "Buy Bread",
+      date: "4/10/2023",
+    },
+    {
+      name: "Buy Rice",
+      date: "4/10/2023",
+    },
+  ];
   const [todoItems, setTodoItems] = useState([]);
   const handleNewItem = (itemName, itemDueDate) => {
     console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
@@ -263,7 +304,7 @@ function App() {
     <>
       <center className="todo-container">
         <AppName />
-        <AppTodo onNewItem={handleNewItem} />
+        <AddTodoForm onNewItem={handleNewItem} />
         {todoItems.length === 0 && <WelcomeMessage />}
         <TodoItems todoItems={todoItems} onDeleteClick={handelDeleteItem} />
       </center>
