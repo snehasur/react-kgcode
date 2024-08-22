@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useReducer, useState } from "react";
 
 export const PostList = createContext({
   postList: [],
@@ -8,6 +8,8 @@ export const PostList = createContext({
 });
 
 const postListReducer = (currPostList, action) => {
+  console.log(currPostList);
+  console.log(action);
   let newPostList = currPostList;
   if (action.type === "DELETE_POST") {
     newPostList = currPostList.filter(
@@ -28,16 +30,21 @@ const PostListProvider = ({ children }) => {
     []
   );
 
-  const addPost = (userId, postTitle, postBody, reactions, tags) => {
+  const [fetching, setFetching] = useState(false);
+
+  // const addPost = (userId, postTitle, postBody, reactions, tags) => {
+  const addPost = (posts) => {
+    console.log(posts);
     dispatchPostList({
       type: "ADD_POST",
       payload: {
-        id: Date.now(),
-        title: postTitle,
-        body: postBody,
-        reactions: reactions,
-        userId: userId,
-        tags: tags,
+        // id: Date.now(),
+        // title: postTitle,
+        // body: postBody,
+        // reactions: reactions,
+        // userId: userId,
+        // tags: tags,
+        posts,
       },
     });
   };
@@ -50,19 +57,47 @@ const PostListProvider = ({ children }) => {
     });
   };
 
-  const deletePost = (postId) => {
-    dispatchPostList({
-      type: "DELETE_POST",
-      payload: {
-        postId,
-      },
-    });
-  };
+  // const deletePost = (postId) => {
+  //   dispatchPostList({
+  //     type: "DELETE_POST",
+  //     payload: {
+  //       postId,
+  //     },
+  //   });
+  // };
+  const deletePost = useCallback(
+    (postId) => {
+      dispatchPostList({
+        type: "DELETE_POST",
+        payload: {
+          postId,
+        },
+      });
+    },
+    [dispatchPostList]
+  );
+  useEffect(() => {
+    setFetching(true);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    console.log("fetch start");
+    fetch("https://dummyjson.com/posts", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        addInitialPosts(data.posts);
+        setFetching(false);
+        console.log("fetch return");
+      });
+    console.log("fetch end");
+    return () => {
+      console.log("clean up");
+      controller.abort();
+    };
+  }, []);
 
   return (
     <PostList.Provider
-      value={{ postList, addPost, addInitialPosts, deletePost }}
-    >
+      value={{ postList, addPost, addInitialPosts, deletePost }}>
       {children}
     </PostList.Provider>
   );

@@ -5,7 +5,7 @@ import WelcomeMessage from "./WelcomeMessage";
 import LoadingSpinner from "./LoadingSpinner";
 const PostList = () => {
   const { postList, addInitialPosts } = useContext(PostListData);
-  const [fetching, setFetching] = useState(false);
+  // const [fetching, setFetching] = useState(false);
   // useEffect(() => {
   //   setFetching(true);
   //   console.log("fetch start");
@@ -21,24 +21,24 @@ const PostList = () => {
   //     console.log("clean up");
   //   };
   // }, []);
-  useEffect(() => {
-    setFetching(true);
-    const controller = new AbortController();
-    const signal = controller.signal;
-    console.log("fetch start");
-    fetch("https://dummyjson.com/posts", { signal })
-      .then((res) => res.json())
-      .then((data) => {
-        addInitialPosts(data.posts);
-        setFetching(false);
-        console.log("fetch return");
-      });
-    console.log("fetch end");
-    return () => {
-      console.log("clean up");
-      controller.abort();
-    };
-  }, []);
+  // useEffect(() => {
+  //   setFetching(true);
+  //   const controller = new AbortController();
+  //   const signal = controller.signal;
+  //   console.log("fetch start");
+  //   fetch("https://dummyjson.com/posts", { signal })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       addInitialPosts(data.posts);
+  //       setFetching(false);
+  //       console.log("fetch return");
+  //     });
+  //   console.log("fetch end");
+  //   return () => {
+  //     console.log("clean up");
+  //     controller.abort();
+  //   };
+  // }, []);
   // const [dataFetched, setDataFetched] = useState(false);
   // if (!dataFetched) {
   //   fetch("https://dummyjson.com/posts")
