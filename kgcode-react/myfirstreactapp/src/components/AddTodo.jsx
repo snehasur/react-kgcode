@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-function AppTodo({ onNewItem }) {
+import { useContext } from "react";
+import { TodoItemsContext } from "../store/todo-items-store";
+
+// function AppTodo({ onNewItem }) {
+function AddTodo() {
+  const {addNewItem} = useContext(TodoItemsContext);
+
+
   const [todoName, setTodoName] = useState("");
   const [dueDate, setDueDate] = useState("");
   const handelNameChange = (event) => {
@@ -11,8 +18,9 @@ function AppTodo({ onNewItem }) {
     setDueDate(event.target.value);
   };
   const handelAddButtonClicked = (event) => {
-    event.preventDefault();
-    onNewItem(todoName, dueDate);
+    //event.preventDefault();
+    //onNewItem(todoName, dueDate);
+    addNewItem(todoName, dueDate);
     setTodoName("");
     setDueDate("");
   };
@@ -43,4 +51,4 @@ function AppTodo({ onNewItem }) {
   );
 }
 
-export default AppTodo;
+export default AddTodo;

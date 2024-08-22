@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useReducer } from "react";
 import Hello from "./Hello";
 import Random from "./Random";
-import AppTodo from "./components/AddTodo";
+import AddTodo from "./components/AddTodo";
 import AppName from "./components/AppName";
 import TodoItem1 from "./components/TodoItem1";
 import TodoItem2 from "./components/TodoItem2";
@@ -24,6 +24,24 @@ import WelcomeMessage from "./components/WelcomeMessage";
 
 import AddTodoForm from "./components/AddTodoForm";
 
+import { TodoItemsContext } from "./store/todo-items-store";
+import { TodoItemsContextProvider } from "./store/todo-items-store";
+//pure function for reducer
+// const todoItemsReducer = (currentTodoItems ,action) => {
+//   let newTodoItems= currentTodoItems;
+//   if (action.type === "NEW_ITEM") {
+//      newTodoItems = [
+//       ...currentTodoItems, 
+//       { name: action.payload.name, date: action.payload.date }
+//     ];
+    
+//   }else if(action.type === "DELETE_ITEM"){
+//      newTodoItems = currentTodoItems.filter(
+//       (item) => item.name !== action.payload.itemName
+//     );
+//   }
+//   return newTodoItems;
+//}
 function App() {
   // return <div>
   //   <h1>this is the best react course</h1>
@@ -250,8 +268,15 @@ function App() {
   // const [todoItems, setTodoItems] = useState([]);
   // const handleNewItem = (itemName, itemDueDate) => {
   //   console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
-  //   const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
-  //   setTodoItems(newTodoItems);
+  //   //const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+  //   //setTodoItems(newTodoItems);
+  //8.38 functional update if many state to take current value
+  //   // setTodoItems((cuurrentValue)=>{
+  //   //   const newTodoItems = [...cuurrentValue, { name: itemName, date: itemDueDate }];
+  //   //   return newTodoItems
+  //   // });
+  //   setTodoItems((cuurrentValue)=>[...cuurrentValue, { name: itemName, date: itemDueDate }]);
+    
   // };
   // const handelDeleteItem = (todoItemsName) => {
   //   //console.log(`Item Deleted:${todoItemsName}`);
@@ -272,44 +297,152 @@ function App() {
   //   </>
   // );
   //todo form+useref
-  const initialTodoItems = [
-    {
-      name: "Buy Milk",
-      date: "4/10/2023",
-    },
-    {
-      name: "Buy Bread",
-      date: "4/10/2023",
-    },
-    {
-      name: "Buy Rice",
-      date: "4/10/2023",
-    },
-  ];
-  const [todoItems, setTodoItems] = useState([]);
-  const handleNewItem = (itemName, itemDueDate) => {
-    console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
-    const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
-    setTodoItems(newTodoItems);
-  };
-  const handelDeleteItem = (todoItemsName) => {
-    //console.log(`Item Deleted:${todoItemsName}`);
-    const newTodoItems = todoItems.filter(
-      (item) => item.name !== todoItemsName
-    );
-    setTodoItems(newTodoItems);
-  };
+  // const initialTodoItems = [
+  //   {
+  //     name: "Buy Milk",
+  //     date: "4/10/2023",
+  //   },
+  //   {
+  //     name: "Buy Bread",
+  //     date: "4/10/2023",
+  //   },
+  //   {
+  //     name: "Buy Rice",
+  //     date: "4/10/2023",
+  //   },
+  // ];
+  // const [todoItems, setTodoItems] = useState([]);
+  // const handleNewItem = (itemName, itemDueDate) => {
+  //   console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+  //   const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+  //   setTodoItems(newTodoItems);
+  // };
+  // const handelDeleteItem = (todoItemsName) => {
+  //   //console.log(`Item Deleted:${todoItemsName}`);
+  //   const newTodoItems = todoItems.filter(
+  //     (item) => item.name !== todoItemsName
+  //   );
+  //   setTodoItems(newTodoItems);
+  // };
 
-  return (
-    <>
-      <center className="todo-container">
-        <AppName />
-        <AddTodoForm onNewItem={handleNewItem} />
-        {todoItems.length === 0 && <WelcomeMessage />}
-        <TodoItems todoItems={todoItems} onDeleteClick={handelDeleteItem} />
-      </center>
-    </>
-  );
+  // return (
+  //   <>
+  //     <center className="todo-container">
+  //       <AppName />
+  //       <AddTodoForm onNewItem={handleNewItem} />
+  //       {todoItems.length === 0 && <WelcomeMessage />}
+  //       <TodoItems todoItems={todoItems} onDeleteClick={handelDeleteItem} />
+  //     </center>
+  //   </>
+  // );
+// // todo context api
+// const initialTodoItems = [
+//     {
+//       name: "Buy Milk",
+//       date: "4/10/2023",
+//     },
+//     {
+//       name: "Buy Bread",
+//       date: "4/10/2023",
+//     },
+//     {
+//       name: "Buy Rice",
+//       date: "4/10/2023",
+//     },
+//   ];
+//   const [todoItems, setTodoItems] = useState([]);
+//   const addNewItem = (itemName, itemDueDate) => {
+//     console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+//     const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+//     setTodoItems(newTodoItems);
+//   };
+//   const deleteItem = (todoItemsName) => {
+//     const newTodoItems = todoItems.filter(
+//       (item) => item.name !== todoItemsName
+//     );
+//     setTodoItems(newTodoItems);
+//   };
+
+// //   const defaultTodoItems = [
+// //     {
+// //     name: "Buy Milk",
+// //     date: "4/10/2023"
+// //   }
+// // ];
+
+//   return (
+//     <>
+//       <TodoItemsContext.Provider value={{todoItems:todoItems,
+//         addNewItem:addNewItem,
+//         deleteItem:deleteItem
+//        }}>
+//       <center className="todo-container">
+//         <AppName />
+//         <AddTodo />
+//          <WelcomeMessage/>
+//         <TodoItems />
+//       </center>
+//       </TodoItemsContext.Provider>
+//     </>
+//   );
+// todo use reducer
+// const [todoItems, setTodoItems] = useState([]);
+/*
+const [todoItems,dispatchTodoItems] = useReducer(todoItemsReducer,[]);
+const addNewItem = (itemName, itemDueDate) => {
+  console.log(`New Item Added:${itemName} Date:${itemDueDate}`);
+  const newItemAction ={
+    type:'NEW_ITEM',
+    payload:{
+      name:itemName,
+      date:itemDueDate
+    }
+  };
+  dispatchTodoItems(newItemAction);
+  // const newTodoItems = [...todoItems, { name: itemName, date: itemDueDate }];
+  // setTodoItems(newTodoItems);
+};
+const deleteItem = (todoItemsName) => {
+  // const newTodoItems = todoItems.filter(
+  //   (item) => item.name !== todoItemsName
+  // );
+  // setTodoItems(newTodoItems);
+
+  const deleteItemAction = {
+    type:'DELETE_ITEM',
+    payload:{
+      itemName:todoItemsName
+    }
+  };
+  dispatchTodoItems(deleteItemAction);
+};
+*/
+//   const defaultTodoItems = [
+//     {
+//     name: "Buy Milk",
+//     date: "4/10/2023"
+//   }
+// ];
+
+return (
+  <>
+    {/* <TodoItemsContext.Provider value={{todoItems:todoItems,
+      addNewItem:addNewItem,
+      deleteItem:deleteItem
+     }}> */}
+     <TodoItemsContextProvider>
+
+    <center className="todo-container">
+      <AppName />
+      <AddTodo />
+       <WelcomeMessage/>
+      <TodoItems />
+    </center>
+    </TodoItemsContextProvider>
+    {/* </TodoItemsContext.Provider> */}
+  </>
+);
+
 }
 
 export default App;

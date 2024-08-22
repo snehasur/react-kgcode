@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 function AddTodoForm({ onNewItem }) {
-  const [todoName, setTodoName] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  //const [todoName, setTodoName] = useState("");
+  //const [dueDate, setDueDate] = useState("");
   const noOfUpdates = useRef(0);
   const todoNameElement = useRef();
   const dueDateElement = useRef();
@@ -17,9 +17,14 @@ function AddTodoForm({ onNewItem }) {
   // };
   const handelAddButtonClicked = (event) => {
     event.preventDefault();
-    const todoName = onNewItem(todoName, dueDate);
+    //const todoName = onNewItem(todoName, dueDate);
     // setTodoName("");
     // setDueDate("");
+    const todoName = todoNameElement.current.value;
+    const dueDate = dueDateElement.current.value;
+    onNewItem(todoName, dueDate);
+    todoNameElement.current.value = "";
+    dueDateElement.current.value = "";
   };
   return (
     <div className="container">
@@ -29,7 +34,7 @@ function AddTodoForm({ onNewItem }) {
             type="text"
             placeholder="Enter Tode Here"
             ref={todoNameElement}
-            value={todoName}
+            //value={todoName}
             //onChange={handelNameChange}
           />
         </div>
@@ -37,7 +42,7 @@ function AddTodoForm({ onNewItem }) {
           <input
             type="date"
             ref={dueDateElement}
-            value={dueDate}
+            //value={dueDate}
             //onChange={handelDateChange}
           />
         </div>
