@@ -11,6 +11,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import FormValidationBootstrapOnlyAdd from "./components/FormValidationBootstrapOnlyAdd.jsx";
 import FormValidationBootstrapWithEdit from "./components/FormValidationBootstrapWithEdit.jsx";
 import Todo from "./components/Todo.jsx";
+import JsonplaceholderCrud from "./components/JsonplaceholderCrud.jsx";
+import JsonplaceholderCrudWithAbortController from "./components/JsonplaceholderCrudWithAbortController.jsx";
 function App() {
   // const [count, setCount] = useState(0);
 
@@ -31,7 +33,9 @@ function App() {
       {/* <Formnew /> */}
       {/* <FormValidationBootstrapOnlyAdd /> */}
       {/* <FormValidationBootstrapWithEdit /> */}
-      <Todo />
+      {/* <Todo /> */}
+      {/* <JsonplaceholderCrud /> */}
+      <JsonplaceholderCrudWithAbortController />
     </>
   );
 }
