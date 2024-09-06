@@ -34,8 +34,8 @@ function App() {
       {/* <FormValidationBootstrapOnlyAdd /> */}
       {/* <FormValidationBootstrapWithEdit /> */}
       {/* <Todo /> */}
-      {/* <JsonplaceholderCrud /> */}
-      <JsonplaceholderCrudWithAbortController />
+      <JsonplaceholderCrud />
+      {/* <JsonplaceholderCrudWithAbortController /> */}
     </>
   );
 }
