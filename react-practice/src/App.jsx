@@ -13,12 +13,27 @@ import FormValidationBootstrapWithEdit from "./components/FormValidationBootstra
 import Todo from "./components/Todo.jsx";
 import JsonplaceholderCrud from "./components/JsonplaceholderCrud.jsx";
 import JsonplaceholderCrudWithAbortController from "./components/JsonplaceholderCrudWithAbortController.jsx";
+import DynamicInput from "./components/DynamicInput.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "./components/HomePage.jsx";
+import AboutPage from "./components/AboutPage.jsx";
+
 function App() {
   // const [count, setCount] = useState(0);
 
   // const decrement = () => {
   //   setCount(count - 1);
   // };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+    },
+    {
+      path: "/about",
+      element: <AboutPage />,
+    },
+  ]);
 
   return (
     <>
@@ -32,10 +47,17 @@ function App() {
       <Home/> */}
       {/* <Formnew /> */}
       {/* <FormValidationBootstrapOnlyAdd /> */}
+      {/* success msg add//double code for error */}
       {/* <FormValidationBootstrapWithEdit /> */}
       {/* <Todo /> */}
-      <JsonplaceholderCrud />
+      {/* success msg add //onchange submit validation at a tym not work*/}
+      {/* single code for error and api */}
+      {/* <JsonplaceholderCrud /> */}
       {/* <JsonplaceholderCrudWithAbortController /> */}
+      {/* dynamically handle multiple inputs in React, you can manage the state of each input by using a single state object */}
+      {/* <DynamicInput /> */}
+
+      <RouterProvider router={router} />
     </>
   );
 }

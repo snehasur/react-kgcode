@@ -1,5 +1,7 @@
+//onchange submit validation at a tym not work
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap
 
 const JsonplaceholderCrud = () => {
   const [posts, setPosts] = useState([]);
@@ -26,63 +28,52 @@ const JsonplaceholderCrud = () => {
     }
   };
 
-  // Validate post inputs for Add form
-  const validateAddPost = () => {
+  // Validate title and body inputs
+  const validateTitleBody = (title, body) => {
     const errors = { title: "", body: "" };
     let isValid = true;
 
-    if (!newPost.title.trim()) {
-      errors.title = "Title is required.";
+    if (title.length > 0 && title.length < 2) {
+      errors.title = "Title must be at least 2 characters.";
       isValid = false;
     }
-    if (!newPost.body.trim()) {
-      errors.body = "Body is required.";
-      isValid = false;
-    }
-
-    setAddPostErrors(errors);
-    return isValid;
-  };
-
-  // Validate post inputs for Edit form
-  const validateEditPost = () => {
-    const errors = { title: "", body: "" };
-    let isValid = true;
-
-    if (!editPost.title.trim()) {
-      errors.title = "Title is required.";
-      isValid = false;
-    }
-    if (!editPost.body.trim()) {
-      errors.body = "Body is required.";
+    if (body.length > 0 && body.length < 2) {
+      errors.body = "Body must be at least 2 characters.";
       isValid = false;
     }
 
-    setEditPostErrors(errors);
-    return isValid;
+    return { errors, isValid };
   };
 
   // Handle change for Add Post
   const handleNewPostChange = (e) => {
     const { name, value } = e.target;
-    setNewPost({ ...newPost, [name]: value });
-
-    // Inline validation
-    validateAddPost();
+    setNewPost((prevPost) => {
+      const updatedPost = { ...prevPost, [name]: value };
+      const { errors } = validateTitleBody(updatedPost.title, updatedPost.body);
+      setAddPostErrors(errors);
+      return updatedPost;
+    });
   };
 
   // Handle change for Edit Post
   const handleEditPostChange = (e) => {
     const { name, value } = e.target;
-    setEditPost({ ...editPost, [name]: value });
-
-    // Inline validation
-    validateEditPost();
+    setEditPost((prevPost) => {
+      const updatedPost = { ...prevPost, [name]: value };
+      const { errors } = validateTitleBody(updatedPost.title, updatedPost.body);
+      setEditPostErrors(errors);
+      return updatedPost;
+    });
   };
 
-  // Create a new post
+  // Validate and create a new post
   const handleAddPost = async () => {
-    if (!validateAddPost()) return; // Validate Add Post form
+    const { errors, isValid } = validateTitleBody(newPost.title, newPost.body);
+    if (!isValid) {
+      setAddPostErrors(errors);
+      return; // Prevent submission if validation fails
+    }
 
     setLoading(true); // Start loader
     try {
@@ -100,9 +91,16 @@ const JsonplaceholderCrud = () => {
     }
   };
 
-  // Edit a post
+  // Validate and edit a post
   const handleEditPost = async (id) => {
-    if (!validateEditPost()) return; // Validate Edit Post form
+    const { errors, isValid } = validateTitleBody(
+      editPost.title,
+      editPost.body
+    );
+    if (!isValid) {
+      setEditPostErrors(errors);
+      return; // Prevent submission if validation fails
+    }
 
     setLoading(true); // Start loader
     try {
@@ -138,100 +136,130 @@ const JsonplaceholderCrud = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Posts List</h1>
+    <div className="container my-4">
+      <h1 className="text-center mb-4">Posts List</h1>
 
       {/* Loader */}
       {loading && <p>Loading...</p>}
 
       {/* Add New Post */}
-      <div>
+      <div className="mb-4">
         <h2>Add Post</h2>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={newPost.title}
-          onChange={handleNewPostChange}
-        />
-        {/* Title error message for Add */}
-        {addPostErrors.title && (
-          <p style={{ color: "red" }}>{addPostErrors.title}</p>
-        )}
-
-        <input
-          type="text"
-          name="body"
-          placeholder="Body"
-          value={newPost.body}
-          onChange={handleNewPostChange}
-        />
-        {/* Body error message for Add */}
-        {addPostErrors.body && (
-          <p style={{ color: "red" }}>{addPostErrors.body}</p>
-        )}
-
-        <button onClick={handleAddPost} disabled={loading}>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control mb-2"
+            name="title"
+            placeholder="Title"
+            value={newPost.title}
+            onChange={handleNewPostChange}
+          />
+          {addPostErrors.title && (
+            <p className="text-danger">{addPostErrors.title}</p>
+          )}
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control mb-2"
+            name="body"
+            placeholder="Body"
+            value={newPost.body}
+            onChange={handleNewPostChange}
+          />
+          {addPostErrors.body && (
+            <p className="text-danger">{addPostErrors.body}</p>
+          )}
+        </div>
+        <button
+          className="btn btn-primary"
+          onClick={handleAddPost}
+          disabled={loading}
+        >
           Add Post
         </button>
       </div>
 
       {/* Edit Post */}
       {editPost && (
-        <div>
+        <div className="mb-4">
           <h2>Edit Post</h2>
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={editPost.title}
-            onChange={handleEditPostChange}
-          />
-          {/* Title error message for Edit */}
-          {editPostErrors.title && (
-            <p style={{ color: "red" }}>{editPostErrors.title}</p>
-          )}
-
-          <input
-            type="text"
-            name="body"
-            placeholder="Body"
-            value={editPost.body}
-            onChange={handleEditPostChange}
-          />
-          {/* Body error message for Edit */}
-          {editPostErrors.body && (
-            <p style={{ color: "red" }}>{editPostErrors.body}</p>
-          )}
-
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control mb-2"
+              name="title"
+              placeholder="Title"
+              value={editPost.title}
+              onChange={handleEditPostChange}
+            />
+            {editPostErrors.title && (
+              <p className="text-danger">{editPostErrors.title}</p>
+            )}
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control mb-2"
+              name="body"
+              placeholder="Body"
+              value={editPost.body}
+              onChange={handleEditPostChange}
+            />
+            {editPostErrors.body && (
+              <p className="text-danger">{editPostErrors.body}</p>
+            )}
+          </div>
           <button
+            className="btn btn-success"
             onClick={() => handleEditPost(editPost.id)}
-            disabled={loading}>
+            disabled={loading}
+          >
             Save Edit
           </button>
         </div>
       )}
 
       {/* Posts Listing */}
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            {/* Hide Edit button when this post is being edited */}
-            {editPost && editPost.id === post.id ? null : (
-              <button onClick={() => setEditPost(post)} disabled={loading}>
-                Edit
-              </button>
-            )}
-            <button
-              onClick={() => handleDeletePost(post.id)}
-              disabled={loading}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      {posts.length === 0 ? (
+        <p>No posts available</p>
+      ) : (
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Body</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {posts.map((post) => (
+              <tr key={post.id}>
+                <td>{post.title}</td>
+                <td>{post.body}</td>
+                <td>
+                  {editPost && editPost.id === post.id ? null : (
+                    <button
+                      className="btn btn-warning btn-sm mr-2"
+                      onClick={() => setEditPost(post)}
+                      disabled={loading}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDeletePost(post.id)}
+                    disabled={loading}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

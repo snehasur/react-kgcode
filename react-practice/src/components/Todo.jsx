@@ -7,6 +7,8 @@ const Todo = () => {
   const [editId, setEditId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
 
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -29,32 +31,53 @@ const Todo = () => {
       return;
     }
 
+    // Check for uniqueness (only for new tasks or edited tasks that change value)
+    const isTaskDuplicate = tasks.some(
+      (t) =>
+        t.text.toLowerCase() === task.trim().toLowerCase() && t.id !== editId
+    );
+
+    if (isTaskDuplicate) {
+      setError("Task already exists");
+      return;
+    }
+
     if (isEditing) {
-      const updatedTasks = tasks.map((t) => {
-        console.log(t);
-        //t.id === editId ? { ...t, text: task } : t
-        if (t.id === editId) {
-          console.log(t);
-          return { ...t, text: task };
-        } else {
-          return t;
-        }
-      });
+      const updatedTasks = tasks.map((t) =>
+        t.id === editId ? { ...t, text: task } : t
+      );
       setTasks(updatedTasks);
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setSuccessMessage("Task updated successfully");
+      setMessageType("success");
       setIsEditing(false);
       setEditId(null);
     } else {
       const newTask = {
         id: Date.now(),
         text: task,
+        isChecked: false, // Ensure default value for isChecked
       };
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setSuccessMessage("Task added successfully");
+      setMessageType("success");
     }
+
     setTask("");
     setError("");
+
+    // Clear success message after 3 seconds
+    setTimeout(() => setSuccessMessage(""), 3000);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const updatedTasks = tasks.map((t) =>
+      t.id === id ? { ...t, isChecked: !t.isChecked } : t
+    );
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const handleEdit = (id) => {
@@ -65,9 +88,16 @@ const Todo = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedTasks = tasks.filter((t) => t.id !== id);
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      const updatedTasks = tasks.filter((t) => t.id !== id);
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setSuccessMessage("Task deleted successfully");
+      setMessageType("danger");
+
+      // Clear delete success message after 3 seconds
+      setTimeout(() => setSuccessMessage(""), 3000);
+    }
   };
 
   return (
@@ -88,21 +118,39 @@ const Todo = () => {
           {isEditing ? "Update Task" : "Add Task"}
         </button>
       </form>
+
+      {successMessage && (
+        <div className={`alert alert-${messageType} mt-3`}>
+          {successMessage}
+        </div>
+      )}
+
       <ul className="list-group mt-4">
         {tasks.map((t) => (
           <li
             key={t.id}
-            className="list-group-item d-flex justify-content-between align-items-center">
+            className="list-group-item d-flex justify-content-between align-items-center"
+            style={{ textDecoration: t.isChecked ? "line-through" : "none" }}
+          >
+            <input
+              type="checkbox"
+              checked={t.isChecked || false} // Ensure checkbox is always controlled
+              onChange={() => handleCheckboxChange(t.id)}
+              className="me-2"
+            />
             {t.text}
             <div>
               <button
                 className="btn btn-sm btn-warning me-2"
-                onClick={() => handleEdit(t.id)}>
+                onClick={() => handleEdit(t.id)}
+                disabled={t.isChecked} // Disable button if task is checked
+              >
                 Edit
               </button>
               <button
                 className="btn btn-sm btn-danger"
-                onClick={() => handleDelete(t.id)}>
+                onClick={() => handleDelete(t.id)}
+              >
                 Delete
               </button>
             </div>
