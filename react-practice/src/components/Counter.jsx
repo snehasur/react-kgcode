@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const Home = () => {
+const Counter = () => {
   const [count, setCount] = useState(0);
 
   const [time, setTime] = useState(Date);
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = `You have clicked ${count} times`;
-  },[count]);
+  }, [count]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <>
-      <div>Home</div>
+      <div>Counter</div>
       <p>{count}</p>
       <button onClick={() => setCount(count + 1)}>Click Me</button>
       <button onClick={() => setCount(0)} className="ms-3">
@@ -33,4 +33,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Counter;
