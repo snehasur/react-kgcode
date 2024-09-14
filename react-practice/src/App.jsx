@@ -43,7 +43,7 @@ function App() {
             element={<FormValidationBootstrapWithEditWithprops />}
           />
           <Route path="/todo" element={<Todo />} />
-          {/* success msg add //onchange submit validation at a tym not work*/}
+          {/* update not working //onchange submit validation at a tym not work*/}
           {/* single code for error and api */}
           <Route
             path="/jsonplaceholder-crud"
