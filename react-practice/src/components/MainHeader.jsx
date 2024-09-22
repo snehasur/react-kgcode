@@ -36,18 +36,6 @@ const Header = () => {
                 Contact
               </Link>{" "}
             </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/sign-in">
-                Sign In
-              </Link>{" "}
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/sign-up">
-                Sign Up
-              </Link>{" "}
-            </li>
-
             <li className="nav-item">
               <Link className="nav-link" to="/logout">
                 Logout

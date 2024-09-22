@@ -27,14 +27,19 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/jsonplaceholder-crud">
-            <i className="bi bi-clipboard-data"></i> JSONPlaceholder CRUD
+          <Link
+            className="nav-link"
+            to="/jsonplaceholder-api-crud-localstorage">
+            <i className="bi bi-clipboard-data"></i> JSONPlaceholder Api CRUD
+            With Localstorage
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/jsonplaceholder-crud-abort">
-            <i className="bi bi-exclamation-octagon"></i> JSONPlaceholder CRUD
-            with Abort
+          <Link
+            className="nav-link"
+            to="/jsonplaceholder-api-crud-localstorage-abort">
+            <i className="bi bi-exclamation-octagon"></i> JSONPlaceholder Api
+            CRUD With Localstorage with Abort
           </Link>
         </li>
         <li className="nav-item">
@@ -71,6 +76,22 @@ const Sidebar = () => {
         <li className="nav-item">
           <Link className="nav-link" to="/counter">
             <i className="bi bi-pencil-square"></i> Counter
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            to="/form-validation-add-edit-react-validation">
+            <i className="bi bi-file-earmark-plus"></i> Form Validation With Add
+            Edit With React Validation
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            to="/jsonplaceholder-api-crud-localstorage-react-validation">
+            <i className="bi bi-file-earmark-plus"></i> JSONPlaceholder Api CRUD
+            With Localstorage with React Validation
           </Link>
         </li>
       </ul>
