@@ -48,18 +48,17 @@ const EmployeeListing = () => {
   return (
     <Box>
       {loading ? (
-        // <Box
-        //   display="flex"
-        //   justifyContent="center"
-        //   alignItems="center"
-        //   height="100vh">
-        //   <img
-        //     src={loaderGif}
-        //     alt="Loading..."
-        //     style={{ width: "100px", height: "100px" }}
-        //   />
-        // </Box>
-        <p>...Loading</p>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="80vh">
+          <img
+            src={loaderGif}
+            alt="Loading..."
+            style={{ width: "100px", height: "100px" }}
+          />
+        </Box>
       ) : (
         <TableContainer>
           <Table>
@@ -80,6 +79,7 @@ const EmployeeListing = () => {
                     <TableCell>{emp.phone}</TableCell>
                     <TableCell>
                       <Button
+                        className="edit-btn"
                         variant="contained"
                         onClick={() => handleEdit(emp._id)}>
                         Edit

@@ -9,6 +9,8 @@ import {
   setSelectedEmployee,
 } from "../components/redux/employeeSlice";
 
+import loaderGif from "../assets/loader.gif";
+
 const EmployeeEdit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -86,13 +88,42 @@ const EmployeeEdit = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
-      {loading && <p>...Loading</p>}
+      {loading && (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh">
+          <img
+            src={loaderGif}
+            alt="Loading..."
+            style={{ width: "100px", height: "100px" }}
+          />
+        </Box>
+      )}
 
       {/* Employee details form */}
       {!loading && (
         <>
-          {loadingSave && <p>Please wait while saving...</p>}
+          {loadingSave && (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              height="80vh">
+              <img
+                src={loaderGif}
+                alt="Loading..."
+                style={{ width: "100px", height: "100px" }}
+              />
+            </Box>
+          )}
 
+          {/* <Box
+            component="form"
+            sx={{ "& > :not(style)": { m: 1, width: "35ch" } }}
+            noValidate
+            autoComplete="off"> */}
           <TextField
             {...register("fullName", { required: "Full Name is required" })}
             label="Full Name"
@@ -102,6 +133,7 @@ const EmployeeEdit = () => {
             helperText={errors.fullName ? errors.fullName.message : ""}
             disabled={formDisabled}
           />
+
           <TextField
             {...register("email", {
               required: "Email is required",
@@ -137,10 +169,12 @@ const EmployeeEdit = () => {
             type="submit"
             variant="contained"
             sx={{ mt: 2 }}
-            disabled={formDisabled}>
+            disabled={formDisabled}
+            className="submit-btn">
             {" "}
             Update
           </Button>
+          {/* </Box> */}
         </>
       )}
 
