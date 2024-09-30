@@ -10,12 +10,10 @@ import {
   selectCount,
 } from "./numberSlice"
 
-export const Number = () => {
+export const NumberCounter = () => {
   const dispatch = useAppDispatch() 
   const count = useAppSelector(selectCount)
-  const [incrementAmount, setIncrementAmount] = useState<string>("2")
-
-  const incrementValue = Number(incrementAmount) || 0
+  const [incrementAmount, setIncrementAmount] = useState<number>(0)
 
   return (
     <div>
@@ -45,12 +43,12 @@ export const Number = () => {
           value={incrementAmount}
           type="number"
           onChange={e => {
-            setIncrementAmount(e.target.value)
+            setIncrementAmount(e.target.valueAsNumber)
           }}
         />
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          onClick={() => dispatch(incrementByAmount(incrementAmount))}
         >
           Add Amount
         </button>

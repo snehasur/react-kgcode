@@ -19,6 +19,7 @@ export const numberSlice = createAppSlice({
     }),
     incrementByAmount: create.reducer(
       (state, action: PayloadAction<number>) => { //need to know
+        console.log(action)
         state.value += action.payload
       },
     ),

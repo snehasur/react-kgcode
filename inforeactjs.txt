@@ -1,0 +1,5 @@
+npm install -g create-react-app
+create-react-app --version
+create-react-app myapp
+E:\react\myapp
+npm start
