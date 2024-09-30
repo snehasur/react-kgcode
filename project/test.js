@@ -129,3 +129,6 @@ form field small krte hbe
 loading middel
 button gaye gaye lege gache
 header footer fix
+
+
+fix console 
