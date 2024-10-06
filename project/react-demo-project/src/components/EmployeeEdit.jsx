@@ -54,8 +54,8 @@ const EmployeeEdit = () => {
   };
   const onSubmit = async (data) => {
     try {
-      setLoadingSave(true);
       setFormDisabled(true);
+      setLoadingSave(true);
       const updatedData = {
         ...data,
         fullName: capitalizeWords(data.fullName),
@@ -118,12 +118,6 @@ const EmployeeEdit = () => {
               />
             </Box>
           )}
-
-          {/* <Box
-            component="form"
-            sx={{ "& > :not(style)": { m: 1, width: "35ch" } }}
-            noValidate
-            autoComplete="off"> */}
           <TextField
             {...register("fullName", { required: "Full Name is required" })}
             label="Full Name"
