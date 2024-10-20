@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import SuccessMessage from "./SuccessMessage";
+import { useNavigation } from "react-router-dom";
 
 const FormValidationBootstrapWithEdit = () => {
+  const navigate = useNavigation();
   const [inputValueFname, setInputValueFname] = useState("");
   const [inputValueLname, setInputValueLname] = useState("");
   const [inputValueEmail, setInputValueEmail] = useState("");
@@ -271,6 +273,7 @@ const FormValidationBootstrapWithEdit = () => {
       setFormVisible(false); // Hide form after submission
       setIsEditing(false); // Reset editing mode
     }, 2000);
+    navigate("/");
   };
 
   const handleAddNew = () => {

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigation } from "react-router-dom";
 
 const Todo = () => {
+  const navigate = useNavigation();
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [editId, setEditId] = useState(null);
@@ -70,6 +72,7 @@ const Todo = () => {
 
     // Clear success message after 3 seconds
     setTimeout(() => setSuccessMessage(""), 3000);
+    navigate("/");
   };
 
   const handleCheckboxChange = (id) => {
@@ -130,8 +133,7 @@ const Todo = () => {
           <li
             key={t.id}
             className="list-group-item d-flex justify-content-between align-items-center"
-            style={{ textDecoration: t.isChecked ? "line-through" : "none" }}
-          >
+            style={{ textDecoration: t.isChecked ? "line-through" : "none" }}>
             <input
               type="checkbox"
               checked={t.isChecked || false} // Ensure checkbox is always controlled
@@ -149,8 +151,7 @@ const Todo = () => {
               </button>
               <button
                 className="btn btn-sm btn-danger"
-                onClick={() => handleDelete(t.id)}
-              >
+                onClick={() => handleDelete(t.id)}>
                 Delete
               </button>
             </div>
