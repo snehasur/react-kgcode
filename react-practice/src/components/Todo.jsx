@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Todo = () => {
-  const navigate = useNavigation();
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [editId, setEditId] = useState(null);
