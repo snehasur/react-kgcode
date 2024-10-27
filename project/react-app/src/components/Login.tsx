@@ -3,19 +3,37 @@ import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
-
+import useApi from './../utils/hook/useApi';
+import {useState,useEffect} from 'react';
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 const LoginPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
-  const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors },getValues } = useForm<LoginFormInputs>();
+  const [sendRequest, setSendRequest] = useState<boolean>(false)
+  const dispatch = useDispatch();//to call slice
   const navigate = useNavigate();
+  const { isSuccess, isLoading, validationErrors, data } = useApi({
+    path: "login",
+    method: "POST",
+    sendRequest: sendRequest,
+    reqData:getValues()
+  })
+  useEffect(() => {
+    setSendRequest(false)
+  }, [sendRequest])
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(login(data))
+    }
+  }, [isSuccess])
 
-  const onSubmit = (data: LoginFormInputs) => {
-    dispatch(login(data.email));
-    navigate('/');
+
+  const onSubmit = () => {
+    setSendRequest(true)
+    // dispatch(login(data.email));
+    // navigate('/');
   };
 
   return (
