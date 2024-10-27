@@ -1,8 +1,9 @@
 
-import { useState } from "react"
+import { useState,useEffect} from "react"
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import styles from "../counter/Counter.module.css"
+import styles from "../counter/Counter.module.css";
+//import {useNavigate} from 'react-router-dom';
 import {
   decrement,
   increment,
@@ -11,9 +12,18 @@ import {
 } from "./numberSlice"
 
 export const NumberCounter = () => {
+  //const navigate = useNavigate()
   const dispatch = useAppDispatch() 
   const count = useAppSelector(selectCount)
   const [incrementAmount, setIncrementAmount] = useState<number>(0)
+
+  useEffect(() => {
+    if(count>=10){
+      //navigate('/home');
+      console.log("greater that 10")
+    }
+  },[count]);
+
 
   return (
     <div>
