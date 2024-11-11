@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import {config} from "./../config";
 import { useAppDispatch, useAppSelector } from "./../../store/store";
 // import { addMessage } from "../slices/toastMessagesSlice";
-import { logout } from "./../../store/authSlice";
-// import { token } from "./../../store/authSlice";
+import { logout,token,user } from "./../../store/authSlice";
 // Defining interfaces for validation errors and request data
 interface ValidationErrors {
     [key: string]: string[]
@@ -30,7 +29,8 @@ const useApi =  ({
     sendRequest
 }: ApiProps) => {
     const dispatch = useAppDispatch()
-    // const userToken = useAppSelector(token)
+    const userToken = useAppSelector(token)
+    const userDetails = useAppSelector(user)
 
     // State variables for tracking API status and data
     const [isSuccess, setIsSuccess] = useState<boolean | null>(false)
@@ -61,7 +61,7 @@ const useApi =  ({
         // Constructing request options
         var options: RequestInit = { method: method, 
             headers: {
-                // 'Authorization': `Bearer ${userToken ?? ''}`,
+                'Authorization': `Bearer ${userToken ?? ''}`,
             }
         }
         if (method === 'POST' || method === 'PATCH') {
@@ -69,7 +69,7 @@ const useApi =  ({
                 method: method,
                 headers: {
                     'Content-Type': 'application/json' ,
-                    // 'Authorization': `Bearer ${userToken ?? ''}`,
+                    'Authorization': `Bearer ${userToken ?? ''}`,
                 },
                 body: JSON.stringify(reqData) // Convert reqData to JSON format
             };
@@ -103,7 +103,8 @@ const useApi =  ({
                     }
                     
                     setIsSuccess(true)
-                    setData(response.data)
+                    //setData(response.data)
+                    setData(response);
                 //}
             }
         } catch (err) {

@@ -18,14 +18,18 @@ const LoginPage = () => {
     path: "login",
     method: "POST",
     sendRequest: sendRequest,
-    reqData:getValues()
+    reqData:getValues() 
   })
   useEffect(() => {
     setSendRequest(false)
   }, [sendRequest])
   useEffect(() => {
     if (isSuccess) {
-      dispatch(login(data))
+      const { token } = data;
+      //dispatch(login(data))
+      console.log(data);
+      dispatch(login({ token,user:data.data }));
+      navigate('/dashboard');    
     }
   }, [isSuccess])
 

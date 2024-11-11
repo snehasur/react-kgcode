@@ -7,6 +7,7 @@ import GuestHeader from "./GuestHeader";
 import Footer from "./Footer";
 import { useSelector } from "react-redux";
 import { isAuthenticated } from "../../store/authSlice";
+import MainHeader from "./MainHeader";
 const GuestLayout = () => {
   const navigate = useNavigate();
   const isUserLoggedIn = useSelector(isAuthenticated);
@@ -20,7 +21,7 @@ const GuestLayout = () => {
   return (
     <>
       <main>
-        <GuestHeader />
+        <MainHeader />
         <Container>
           <section className="section register min-vh-100  flex-column align-items-center justify-content-center py-4">
             <Container>

@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 
 const MainLayout = () => {
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  // const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
-  return isAuthenticated ? (   
+  return (
+  // isAuthenticated ? (   
     <div>
       <MainHeader />
       <div className="container-fluid">
@@ -27,10 +28,12 @@ const MainLayout = () => {
         </div>
       </div>
       <Footer />
-    </div>)
-  : (
-    <Navigate to="/login" replace />
-  );
+    </div>
+  //   )
+  // : (
+  //   <Navigate to="/login" replace />
+  //);
+  )
 };
 
 export default MainLayout;
